@@ -4,8 +4,9 @@
 ## Loading and preprocessing the data
 
 ```r
-# load the required data table library
+# load the required data table, lattice libraries
 library (data.table)
+library (lattice)
 # unzip the data file and read the data
 unzipData <- unz('activity.zip', 'activity.csv')
 activityData <- read.table(unzipData, header = TRUE, sep = ',')
@@ -91,5 +92,24 @@ hist(dataSummaryWithoutNA$total, xlab='Total Steps', ylab='Frequency', main='His
 ## Are there differences in activity patterns between weekdays and weekends?
 
 ```r
+# Adding factor variable to store week day or weekend
 activityDataWithoutNA$Weekday <- as.factor(ifelse(weekdays(as.Date(activityDataWithoutNA$date),abbreviate = FALSE) %in% c("Saturday","Sunday"), "Weekend", "Weekday")) 
+
+# calculating the weekday daily pattern for each interval
+activityDataWeekDay <- activityDataWithoutNA[activityDataWithoutNA$Weekday=='Weekday']
+weekdayDailyPattern <- as.data.frame(activityDataWeekDay[, j=list(total = sum(steps, na.rm = TRUE), mean = as.integer(mean(steps, na.rm = TRUE))),by = interval])
+
+# calculating the weekend daily pattern for each interval
+activityDataWeekEnd <- activityDataWithoutNA[activityDataWithoutNA$Weekday=='Weekend']
+weekendDailyPattern <- as.data.frame(activityDataWeekEnd[, j=list(total = sum(steps, na.rm = TRUE), mean = as.integer(mean(steps, na.rm = TRUE))),by = interval])
+
+plot(weekdayDailyPattern$interval, weekdayDailyPattern$mean, type='l', xlab = 'Interval', ylab = 'Average steps', main = 'Weekday Daily Activity Pattern')
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+
+```r
+plot(weekendDailyPattern$interval, weekendDailyPattern$mean, type='l', xlab = 'Interval', ylab = 'Average steps', main = 'Weekend Daily Activity Pattern')
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-2.png) 
