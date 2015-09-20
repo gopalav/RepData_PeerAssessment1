@@ -1,36 +1,28 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
-```{r}
+
+```r
 unzipData <- unz('activity.zip', 'activity.csv')
 activityData <- read.table(unzipData, header = TRUE, sep = ',')
 ```
 
 
 ## What is mean total number of steps taken per day?
-```{r}
-```
+
 
 
 
 ## What is the average daily activity pattern?
-```{r}
-```
+
 
 
 
 ## Imputing missing values
-```{r}
-```
+
 
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r}
-```
+
