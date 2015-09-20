@@ -98,18 +98,18 @@ activityDataWithoutNA$Weekday <- as.factor(ifelse(weekdays(as.Date(activityDataW
 # calculating the weekday daily pattern for each interval
 activityDataWeekDay <- activityDataWithoutNA[activityDataWithoutNA$Weekday=='Weekday']
 weekdayDailyPattern <- as.data.frame(activityDataWeekDay[, j=list(total = sum(steps, na.rm = TRUE), mean = as.integer(mean(steps, na.rm = TRUE))),by = interval])
+weekdayDailyPattern$Weekday <- 'Weekday'
 
 # calculating the weekend daily pattern for each interval
 activityDataWeekEnd <- activityDataWithoutNA[activityDataWithoutNA$Weekday=='Weekend']
 weekendDailyPattern <- as.data.frame(activityDataWeekEnd[, j=list(total = sum(steps, na.rm = TRUE), mean = as.integer(mean(steps, na.rm = TRUE))),by = interval])
+weekendDailyPattern$Weekday <- 'Weekend'
 
-plot(weekdayDailyPattern$interval, weekdayDailyPattern$mean, type='l', xlab = 'Interval', ylab = 'Average steps', main = 'Weekday Daily Activity Pattern')
+# plotting weekday and weekend patterns
+combined <- rbind(weekdayDailyPattern, weekendDailyPattern)
+
+xyplot(mean~interval | Weekday, data=combined,
+                main="Weekday vs Weekend", xlab="Interval",  ylab="Average steps",layout=c(1,2),type='l')
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
-
-```r
-plot(weekendDailyPattern$interval, weekendDailyPattern$mean, type='l', xlab = 'Interval', ylab = 'Average steps', main = 'Weekend Daily Activity Pattern')
-```
-
-![](PA1_template_files/figure-html/unnamed-chunk-6-2.png) 
