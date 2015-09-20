@@ -85,8 +85,6 @@ hist(dataSummaryWithoutNA$total, xlab='Total Steps', ylab='Frequency', main='His
 
 ## Are there differences in activity patterns between weekdays and weekends?
 ```{r}
-print(dataSummaryDailyPattern)
-print(dataSummary)
-print(dataSummaryWithoutNA)
-print(sum(activityDataWithoutNA$steps[activityDataWithoutNA$date=='2012-10-02']))
+activityDataWithoutNA$Weekday <- as.factor(ifelse(weekdays(as.Date(activityDataWithoutNA$date),abbreviate = FALSE) %in% c("Saturday","Sunday"), "Weekend", "Weekday")) 
+
 ```
